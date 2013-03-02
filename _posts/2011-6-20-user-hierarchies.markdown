@@ -27,11 +27,11 @@ If you know anything about SQL like  you probably know that it might be pain to 
 
 For starters let's consider this simple model.
 
-![Data Model](/images/hierarchies/basic_model.png "Basic data model")
+![Data Model]https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/dqTgVH5qml/images/hierarchies/basic_model.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Basic data model")
 
 and this hierarchy
 
-![User Hierarchy](/images/hierarchies/user_hierarchy.png "User Hierarchy")
+![User Hierarchy](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/7owk83TfQB/images/hierarchies/user_hierarchy.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "User Hierarchy")
 
 The first one is the most straightforward approach anybody can think of. Just enumerate every person's subordinates in the variable. For our model it would look like this
 
@@ -62,7 +62,7 @@ There are several advantages of this approach. It is easy to understand since th
 
 So how we can change this approach? There is a way how to express a tree hierarchy called closure table. It is a table that for each manager it has all his subordinates (not only direct ones). These are exactly the same values we put into variables in the previous method but this time we will put that hierarchy into data. I created a picture to illustrate this.
 
-![Closure Table Hierarchy](/images/hierarchies/closure_table_hierarchy.png "Closure Table Hierarchy")
+![Closure Table Hierarchy](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/JEOxrfLv6Y/images/hierarchies/closure_table_hierarchy.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Closure Table Hierarchy")
 
 New datasets in our model are Manager and Subordinates. This has several implications. We no longer can claim that we did not change the model but this is not all the changes we need to do. Lets observe the picture for a moment. The Sales Rep dataset is the same as in the previous model. In the Subordinate dataset there is stored the relationship of Manager and his subordinates. The Manager dataset contains the exact same data as Sales Rep dataset. The most important thing happens in the Opportunity table. Notice that each opportunity is now duplicated several times. The duplication factor depends on the number of managers of that particular rep. Opportunity 1234 is there twice one for John who actually sold it and once for his manager Joe.
 
@@ -97,11 +97,11 @@ This will cause that the leaf users will not be included in the report when we w
 
 There is one more way how to express a tree hierarchy. Suppose that we will assign two numbers (lets call it left/right) to each user in a way that the following is true. For each subordinate his left is greater than left of his manager and at the same time subordinate's right is lesser than his manager's right. We will than add one fact to the users dataset either left or right. The model then looks like this.
 
-![Left Right Model](/images/hierarchies/left_right_model.png "Left Right Model")
+![Left Right Model](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/a_2f63Qgpm/images/hierarchies/left_right_model.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Left Right Model")
 
 And we create two variables left and right that for each user we fill with the respective values. This image shows the sample values for our hierarchy.
 
-![Left Right Hierarchy](/images/hierarchies/left_right_hierarchy.png "Left Right Hierarchy")
+![Left Right Hierarchy](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/ffx4uGe33m/images/hierarchies/left_right_hierarchy.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Left Right Hierarchy")
 
 This solution has some unique properties. For arbitrarily deep hierarchy we fill only two numbers for each user. It also does not affect the cardinality of Sales Rep and Opportunities dataset.
 

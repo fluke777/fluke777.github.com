@@ -105,7 +105,7 @@ You should see a list with two items in it, only one little glitch, there is not
 
 To keep it simple, this is by no means a very complex server implementation. It is not even a real comet server implementing Bayeux protocol. It is just a long polling scheme, neverheless it works as an example.
 
-![Long polling server scheme](/images/long_polling_server.png "Long polling server scheme")
+![Long polling server scheme](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/F6GrZnXcdw/images/long_polling_server.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Long polling server scheme")
 [Omni Graffle source file](/sources/long_polling_server.graffle)
 
 The point here is, that client opens a connection to the server and server will keep it open only for a certain period of time and then send a response and close it. Client will process the response and immediately opens a new connection to the server. This goes on and on. The period of time, that the connection is opened can be divided into three cases
@@ -118,7 +118,7 @@ The point here is, that client opens a connection to the server and server will 
 
 
 Pretty simple hm? How we could implement it in NodeJS?
-    
+
     var sys  = require('sys'), 
         http = require('http'),
         repl = require('repl');

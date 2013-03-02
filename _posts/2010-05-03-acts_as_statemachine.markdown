@@ -10,7 +10,7 @@ The problem I have encountered is that in the scenario described above, I found 
 First, lets have a look on user's states, events and transitions. The idea behind a state chart is pretty simple. Object can be in one state at a time. Each state has defined some events, that it responds to. The response is to go to another state and maybe do something interesting, some side effect. As you can see, not all events are defined for all states.
 
  
-![User state chart](/images/user_state_chart.png "User state chart")
+![User state chart](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/rQKVpT2GyV/images/user_state_chart.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "User state chart")
 
 Lets see, how User described in the statechart could be expressed in code
 
@@ -70,7 +70,7 @@ Let's try something more difficult. Imagine, you have a user, that just filled a
 
 Pretty straightforward. You can probably smell, that not only user here has a state, but also registration object could be thought about as a stateful machine. Lets have a look at another state chart, that will depict states and transitions of the registration object.
 
-![Registration state chart](/images/registration_state_chart.png "Registration state chart")
+![Registration state chart](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/HI_khazyp0/images/registration_state_chart.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Registration state chart")
 
 Let's define our Registration class. This one should implement some kind of workflow and on important places do something to the user.
 

@@ -52,7 +52,7 @@ One basic form how to express a tree hierarchy in a database is through adjacenc
 
 This data describes hierarchy on the picture.
 
-![User Hierarchy](/images/hierarchies/user_hierarchy.png "User Hierarchy")
+![User Hierarchy](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/7owk83TfQB/images/hierarchies/user_hierarchy.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "User Hierarchy")
 
 This is not a very pleasant format to work with in a databases but it is very well suited to handle in any language that uses a recursion. User hierarchies gem is a little tool that aims to free you from using recursion itself and enable you to express handling of hierarchies with simple DSL.
 
@@ -112,7 +112,7 @@ I have mentioned a variable a couple of times. Since I assume that you are a sea
 ##Loading values inside project
 We have now prepared the values for prompts and we need to load those into the project. First let's talk about what does it actually mean. In these examples we are considering only attribute filters so let's talk about attributes first. Imagine for example an attribute person - sales rep. Attribute is a logical entity in your project. It may be given multiple names. For example it might have ID (as in SF this is unique) or it might be given a name like Thomas. It might be the case that we have multiple entities of Sales Rep called Tomas in out organization. So the name we use to label the entity does not have to be unique. We call these labels labels and an entity might have multiple labels. These labels are attached to the particular entity that is identified by a key which is unique and it is completely hidden to the end user. When we are setting the Variable value for a user we are basically saying "Find me an entity key for which a label does have value X". This is ok as long as the attribute has only one label. If it has more we need to specify which one should be searched to obtain the key. It is best to choose some label that is unique for that attribute. The underlying structure illustrates the picture below
 
-![Attribute and Labels](/images/hierarchies/attribute.png "Attribute and Labels")
+![Attribute and Labels](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/U6rm-4zoNP/images/hierarchies/attribute.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Attribute and Labels")
 
 So to specify the loading process we need to tell our script several things . We need to say which variable we will load the data into. If we use other than default label we need to specify which one exactly. We also need to tell it where are the values we would like to load. The values format should be in csv in form
 
@@ -168,14 +168,15 @@ is project ID.
 ### Object URI
 When I am looking for an URI of a particular object I usually recommend to find it inside application in Manage > Data. Let's look how to find URI of an attribute and URi of its label.
 
-![Step 1](/images/hierarchies/manage_attributes.png "Step 1")
-![Step 2](/images/hierarchies/manage_attribute_name.png "Step 2")
+![Step 1](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/XKQbqzO4Wb/images/hierarchies/manage_attributes.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Step 1")
+
+![Step 2](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/WChRFnioYN/images/hierarchies/manage_attribute_name.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Step 2")
 
 We can have a look into the definition of the obj in something we inside GoodData call Grey Pages. The URL is simple. https://secure/gooddata.com/ + obj URL
 
-![Step 3](/images/hierarchies/gdc_gray.png "Step 3")
+![Step 3](https://dl.dropbox.com/sh/rrbxfbxjpdn9jjx/bpGMj5EmaN/images/hierarchies/gdc_gray.png?token_hash=AAHrKDH8pO2ILgP_I-cWd2fE4UrkyC8JICZKbOoi8WH8CQ "Step 3")
 
 Here you can see that this attribute has 3 labels (internally they are called display forms). We can find URI of our desired one by name. If we are not sure we can check the values that are in that particular attribute by clicking on the link named elements.
 
 ##Conclusions
-We have walked through the process of creating a variable, transforming the values to be more suitable for our problem, defining an upload plan and uploading the values. As I have stated before this is just a start. I have several ideas how we could improve this so the usage would be more easy. It is also possible that the API and the docs here will change. The advantage of the setup we made is that it is very easy to follow the latest and greatest code through pulling from github. In the meantime try it and tell me what did you like or hate. Any feedback is appreciated on email svarovsky.tomas@gmail.com or here in comments.
+We have walked through the process of creating a variable, transforming the values to be more suitable for our problem, defining an upload plan and uploading the values. As I have stated before this is just a start. I have several ideas how we could improve this so the usage would be more easy. It is also possible that the API and the docs here will change. The advantage of the setup we made is that it is very easy to follow the latest and greatest code through pulling from github. In the meantime try it and tell me what did you like or hate.
