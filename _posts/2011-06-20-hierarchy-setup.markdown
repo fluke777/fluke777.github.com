@@ -32,7 +32,7 @@ cloning all those 4 repositories mentioned earlier
 
 Now we will install all the dependencies but for that we need the right tool - Bundler.
 
-    sudo gem install bundler
+    gem install bundler
 
 Now we can install the dependencies
 

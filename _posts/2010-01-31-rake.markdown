@@ -8,7 +8,7 @@ As you have guessed, Rake is a DSL for expressing build tasks and their dependen
 
 ##Installation
 Here is nothing new, if you are using ruby, you have rake installed anyway for a long time. So just type
-    sudo gem install rake
+    gem install rake
 and wait.
 
 ##Creating a basic Rakefile and first task
