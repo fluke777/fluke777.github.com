@@ -1,0 +1,275 @@
+---
+layout: post
+title: Rake tutorial
+---
+As in all companies, we need to build stuff. Recently I got involved with our client side building process and found out, that it is written in PHP (which is not bad), but custom (which often is). Since we needed to introduce serious slew of new tasks, we started looking for alternative, which would provide us with infrastructure and features, our system didn't. Since I used rake before a little bit, I finally got incentive to get my feet fully wet. This is what I found out.
+
+As you have guessed, Rake is a DSL for expressing build tasks and their dependencies. Enough talk, let's jump straight to the basics.
+
+##Installation
+Here is nothing new, if you are using ruby, you have rake installed anyway for a long time. So just type
+    sudo gem install rake
+and wait.
+
+##Creating a basic Rakefile and first task
+In your working directory create a file called Rakefile. Inside it should go this
+
+    task :hello do |t|
+        puts "hello"
+    end
+
+We have just created our first task called hello, which should simply put hello to the screen, when run. Run it via `rake hello` on your console. And quite surprisingly you can see `hello` on the output.
+
+> Actually there are many other options how to name your Rakefile, amongst others rakefile, RAKEFILE etc. I am sure, you can pick your favorite
+
+###Adding description
+Since you want to be as much user friendly as possible, you can add a description to a task, so when somebody unfamiliar with your tasks can see, what have you prepared for them.
+
+    desc "Says hello"
+    task :hello do |t| puts "hello" end
+
+Now you can use
+    
+    $ rake -T
+    > rake hello  # Says hello
+
+This has another reason, as you will see later, you will create a lots of tasks, which need not be necessarily nice to be seen from the outside. By adding description to some of them, you are actually making hints, what users should use. Others will remain invisible to them.
+
+###Defining dependencies
+Lots of your tasks will have dependencies on other stuff, that needs to be done before your task can make fulfill its purpose. Usually, dependencies are shown on the famous C code compiling, which has roots in make times, but chances are, you are not compiling C code, so let's have a look on something more quotidian.
+
+    desc "Have a beer"
+    task :drink_beer => [:buy_beer] do |t|
+        puts "Drinking it"
+    end
+
+    desc "Buys a beer"
+    task :buy_beer do |t|
+        puts "Buying a beer"
+    end
+
+Dependencies are defined as an array of comma separated names of tasks. As you can see, if you want to have a beer, you have to buy it first. If you run this, you will see.
+
+    $ rake drink_beer
+    > Buying a beer
+      Drinking it
+
+What doesn't need to be pretty obvious is the fact, that each task is _run only once_ during execution, no matter how many times, it is marked as a dependency of another task. Say, you want to have a party, so you have to buy beer and vodka, and for each of this fine products, you have to pay. Speaking rake, you could write something like this.
+
+    task :party => [:buy_beer, :buy_vodka] do |t|
+        puts "Partying"
+    end
+
+    task :buy_beer => :pay do |t|
+        puts "Buying a beer"
+    end
+
+    task :buy_vodka => :pay do |t|
+        puts "Buying a vodka"
+    end
+
+    task :pay do
+        puts "Paying"
+    end
+
+On your console then.
+
+    $ rake party
+    > Paying
+      Buying a beer
+      Buying a vodka
+      Partying
+    
+You paid only once, thief.
+
+###Defining default task
+when you run rake without any other arguments, task with name default is run, so we can define
+
+    task :default => :my_default
+    
+    task :my_default do |t|
+        puts "something default"
+    end
+
+From this you can also see, that tasks doesn't necessarily need to have a block associated, moreover rake doesn't complain even if you define more tasks with the same name. What it does instead, is associate all your blocks of code and their dependencies to the particular task. You can use this to make some definitions look more prettier, or more messy.
+
+Ok, this is neat DSL for wrapping tasks (and we will get back soon for more), now more on what we can run inside of these tasks.
+
+##When you need to call others
+
+Usually, you want to run some other scripts inside the tasks. It may be your favorite C compiler, javascript minifactor, code analysis tool, or anything else. Kernel#system is ideal for this.
+
+system returns true or false depending on the success of the command. You can grab the exit status of the last system call inside the $? variable.
+
+    system "echo hi"
+    hi
+    => true
+    
+    system "false"
+    => false
+    
+    puts $?
+    256
+    => nil
+
+The problem with this is, that STDOUT will go to the same place as your program's. So if you would like to capture what the system will write on the standard output, use backticks.
+
+    `echo ahoj` => "ahoj\n" #use chomp, to get rid of that EOL
+    `false`     => ""
+
+Very often calling the others means messing with files, directories etc. If you would use ruby tools, you have just seen, your code would be interspersed with things like
+
+    # somewhere in your task
+    system "cp this there"
+
+which can be pretty annoying. With Rake comes couple of modules/classes, that intend to solve these particular problems
+
+##FileUtils
+FileUtils are wrappers around couple of bash commands. The above example could be written like this
+    
+    include FileUtils
+    
+    # somewhere in your task
+    cp 'this', 'there'
+
+Form this contrived example, maybe you are not that excited, but since it is not just a wrapper, but often it brings some ruby sugar on top of that, things can get expressed more terse (and readable) very often. At least, you are getting rid of those darn system calls. 
+
+For complete reference, have a look at [http://ruby-doc.org/stdlib/libdoc/fileutils/rdoc/index.html](http://ruby-doc.org/stdlib/libdoc/fileutils/rdoc/index.html) for a complete list. Also have a look at modules `FileUtils::Verbose, FileUtils::NoWrite, FileUtils::DryRun`, which can come handy during development, or debugging.
+
+##FileList
+FileList is a neat way to acquire list of file names and operate over it. This example is run in the directory, where you have files and directories structured like this.
+    
+    1.txt
+    2.txt
+    3.txt
+    4.txt
+    other
+        5.txt
+      
+Run `irb` and ...
+    
+    require 'rake'
+    $ l = FileList["*.txt"]
+    > ["1.txt", "2.txt", "3.txt", "4.txt"]
+    
+    $ l.ext('doc')
+    > ["1.doc", "2.doc", "3.doc", "4.doc"]
+    
+    $ l.sub(/2/, 'A')
+    > ["1.txt", "A.txt", "3.txt", "4.txt"]
+    
+    $ l.exclude {|f| f.match /1|2/}
+    > ["3.txt", "4.txt"]
+    
+    $ l = FileList['**/*']
+    > ["1.txt", "2.txt", "3.txt", "4.txt", "other", "other/5.txt"]
+
+and more, again have a look at [http://rake.rubyforge.org/](http://rake.rubyforge.org/). One thing I would like to be specific about here is the fact, that FileList is lazy evaluated, so be aware of that. It actually interpolates to the list of the filenames at the moment, when it is asked for them. Until that moment it just holds the glob and waits. This can cause problems for example here
+
+    #in your task
+    x = nil
+    cd 'other' do
+        # here I am in other drectory
+        x = FileList["*.txt"]
+    end
+    # here I am not, x gets evaluated because I am calling printing it
+    puts x
+
+You need to explicitly resolve the filenames, which you can do with `resolve` message.
+Ok, now back to Rake. What are other types of tasks we have?
+
+##FileTask
+
+Other type of the task we have is FileTask, which is particularly powerful, in defining dependencies among files. We can define a basic file task like this
+
+    file "notes.gz" => "notes.txt" do |t|
+        puts "gzipping #{t.prerequisites.first}"
+        system "cat #{t.prerequisites.first} | gzip > #{t.name}"
+    end
+
+now on the command line
+    
+    $ echo "Hello world" > notes.txt
+    $ rake notes.gz
+    > gzipping notes.txt
+
+File task is executed only if the target (name of the task) doesn't exist, or if the source is newer, than the target. What does this mean?
+
+    $ rake notes.gz
+    >
+    
+Yes, nothing happened. Touch notes.txt and run task again. Prerequisite for this is, that notes.txt file should exist (it is more complicated, but wait for it) and that the task name gets created during the task execution. To avoid unnecessary mistakes, always use `t.name` and `t.prerequisites` messages inside your tasks definition, so it is decoupled from actual task name. When you change your mind and change the task name to better-notes.txt, you can keep banging your had, why it is not creating the file and runs every time.
+
+##Rules
+
+Before we were talking about the fact, that prerequisite of the file task has to exist. In fact, rake is not treating the prerequisite of the task as a filename. Here is the steps rake will do (take this with a grain of salt, this is what I have been able to found out during using rake, not by reading code)
+
+* First, he treats it like a name of a task. This make sense, what if we get something like this
+    
+    file "notes.gz" => "notes.txt" do |t|
+        # how to create notes.gz from notes.txt
+    end
+    
+    task "notes.txt" do |t|
+        # how to create notes.txt
+    end
+    
+If rake was treating it like a file name, it would fail the instance we run `rake notes.gz`, because there is possibly no file notes.txt at that time. Instead Rake will treat as a name of dependency task, create the file and everybody is happy. Note that this is not, what you should do, it is here just to illustrate this point. When defining the filetask, you should be providing file, so you could take advantage of the time stamp checking.
+
+* Second, if he doesn't find a task of this name, he will try to look if there is not a file. If he finds it, all is great.
+
+* Third, if he doesn't discover the file, he checks if he could not create a task on the fly, based on the rules defined. Where he gets the rules? As you have probably guessed form the title, you define them.
+
+As stated before, rule are not tasks, so bear this in mind. They are prescriptions, how to create a task given its name. Rake will take these rules as a last resort to find a task, that he could run. Simple rule for gzipping a file is here.
+
+    rule '.gz' => '.txt' do |r|
+        puts "gzipping #{r.source}"
+        system "cat #{r.source} | gzip > #{r.name}"
+    end
+
+Take note, that I have desgnated a variable inside the block name r, not t, to further express that this is not a task. Also, methods provided on rule are not the same as on task, as you can see from `source` and `name` messages. You run it like this (given, we have our notes.txt in place, also get rid of notes.gz from previous examples )
+
+    $ rake notes.gz
+    > gzipping notes.txt
+
+With rules, you get all the benefits we are used to from filetasks, so when you run it again, nothing is gzipped.
+
+
+To ilustrate some challenges with rules, imagine a situation, that I have more .txt files (like in our examples before) and I want them all zipped with a rake zip task. We can use the rule we have already devised before, we just need to define the zip task.
+
+    rule '.gz' => '.txt' do |r|
+        puts "gzipping #{r.source}"
+        system "cat #{r.source} | gzip > #{r.name}"
+    end
+    
+    file :zip => FileList["*.txt"].ext("gz")
+
+Notice, how we defined the dependencies of the zip task via first finding the *.txt (sources) files and turning them into *.gz (names of the tasks, which can be synthetized by our rule ). This is a little odd at first, but completely logical, since no *.gz files can exist. We could express same functionality differently without rules like this.
+    
+    files_to_process = FileList["*.txt"].ext("gz")
+    files_to_process.each do |name|
+        file name => name.sub(".gz", ".txt") do |t|
+            system "cat #{t.prerequisites.first} | gzip > #{t.name}"
+        end
+    end
+    
+    file :zip => files_to_process
+    
+In this simple example, I would definitely go with rules, but sometimes, rules are too powerful for mere humans. Because they are called recursively, you could be surprised, how they can interact in new and unpredicted ways. And despite the fact, that you can usually describe your problem with fewer lines, it can be brittle to maintain. As a rule of thumb, always try to keep rules as specific as possible. Sometimes explicit creating of necessary tasks can be better, use force to decide Luke.
+
+To be even more complicated, you can use regular expressions in the rules for both name and source. For source, you can even use a proc. For example like this.
+
+    rule (/fluke/ => [proc {|name| mangle_name(name)}]) do |r|
+        # every task which includes fluke can be synthetized by this rule by mangling the name
+    end
+
+## That's all folks
+And that is all. I hope, we have touched majority of things to get you up to speed. Sure, we didn't cover
+
+*   default clean and clobber tasks
+*   directory shorthand tasks
+*   namespaces
+*   command lines arguments
+*   distributed rake aka drake
+
+but I am sure, that you can easily found your answers using our big brother.
