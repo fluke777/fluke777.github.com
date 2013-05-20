@@ -1,9 +1,8 @@
 ---
 layout: post
 title: Acts as state machine
+perex: Recently I have been posed a task in our company to think about redesigning our invitation and registration infrastructure to enable incorporation of new use cases. Since I have got my feet wet with Sproutcore, I am now seeing patterns and problems on client, I used to thought are server side only. Since I used to to do stuff with Rails, I decided to steal something from them and hack it quickly in JavaScript. Our company uses primarily YUI 3 now, so this is meant to work right in the YUI environment, though it probably will be not much hassle to port it to any library out there.
 ---
-
-*Recently I have been posed a task in our company to think about redesigning our invitation and registration infrastructure to enable incorporation of new use cases. Since I have got my feet wet with Sproutcore, I am now seeing patterns and problems on client, I used to thought are server side only. Since I used to to do stuff with Rails, I decided to steal something from them and hack it quickly in JavaScript. Our company uses primarily YUI 3 now, so this is meant to work right in the YUI environment, though it probably will be not much hassle to port it to any library out there.*
 
 The problem I have encountered is that in the scenario described above, I found a lots of objects, that are in certain states and during transitions between these states, something interesting might happen. This was a recurring pattern, so I thought it might be nice to wrap it in some kind of a module for reuse. Since Ruby people are crazy about all the DSL and DRY stuff and Ruby itself lend itself well for these purposes, someone already created an acts_as_statemachine plugin for ActiveRecord library. Although Javascript itself is not able of such neat DSL constructs, it didn't take long to create an implementation, that acheived something similar and was pleasant to look at. 
 

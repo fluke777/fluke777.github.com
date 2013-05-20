@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Sproutcore and NodeJS are stars and comets
+perex: During spending a lots of time with YUI3, I felt like it is a great set of tools and abstractions, but it is still too rough and low level for real application development. YAHOO gave me the hammer and nails, but never told me, how to build a house. Sproutcore on the other hand is much more mature in this regard and IMHO solves a lots of problems, I have encountered in current web application development. I have been playing with it a little lately, so let's have a look, how NodeJS and Sproutcore, two latest and greatest in client and server side development, are playing together.
 ---
-*During spending a lots of time with YUI3, I felt like it is a great set of tools and abstractions, but it is still too rough and low level for real application development. YAHOO gave me the hammer and nails, but never told me, how to build a house. Sproutcore on the other hand is much more mature in this regard and IMHO solves a lots of problems, I have encountered in current web application development. I have been playing with it a little lately, so let's have a look, how NodeJS and Sproutcore, two latest and greatest in client and server side development, are playing together.*
 
 > __Note__: This was done on Sproutcore version 1.0 and NodeJS version v0.1.28. Since   NodeJS API is quite unstable, if you encounter any problems, let me know and I will try to update this article. 
 

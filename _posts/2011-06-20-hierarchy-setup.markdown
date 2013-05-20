@@ -1,9 +1,8 @@
 ---
 layout: post
 title: How to set up a user hierarchy in GoodData
+perex: In a recent article I have discussed several options for expressing hierarchies. Though it discussed the problem in context of GoodData BI platform it actually did not show you how to do that exactly. Now it is time to roll up our sleeves and try to hack it together.
 ---
-
-*In a recent article I have discussed several options for expressing hierarchies. Though it discussed the problem in context of GoodData BI platform it actually did not show you how to do that exactly. Now it is time to roll up our sleeves and try to hack it together.*
 
 First a word of caution. This is work in progress. I would like this to be the foundation of something bigger and more polished and it serves currently mainly to sort out my ideas and for you to play with it. Feedback is highly appreciated at svarovsky.tomas@gmail.com.
 

@@ -2,10 +2,8 @@
 layout: post
 title: Copying files between buckets in S3
 published: true
+perex: There is a time in every man's life when he gets involved with big data. It recently happened to me not only in my pet projects but in a real life scenario and suddenly your computer and network is not enough and everything is slow again. An obvious choice for storing data is S3 on AWS but even here you have to be smart to be able to move data around. I have written a small snippet of code to move data between buckets efficiently.
 ---
-
-*There is a time in every man's life when he gets involved with big data. It recently happened to me not only in my pet projects but in a real life scenario and suddenly your computer and network is not enough and everything is slow again. An obvious choice for storing data is S3 on AWS but even here you have to be smart to be able to move data around. I have written a small snippet of code to move data between buckets efficiently.*
-
 It happens sometimes that data that you need are in a different bucket than you really need them. You cannot rename the bucket sometimes data are in a different account etc. Moving files to your drive and then uploading back is not only very slow but you also pay for the band with. Much more efficient is to use Amazon's APIs to copy files around. I think there are some commercial tools that help you with this but you can easily roll your own tool.
 
 <script src="https://gist.github.com/fluke777/5069761.js"> </script>

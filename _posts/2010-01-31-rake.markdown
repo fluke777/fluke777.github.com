@@ -1,8 +1,9 @@
 ---
 layout: post
 title: Rake tutorial
+perex: As in all companies, we need to build stuff. Recently I got involved with our client side building process and found out, that it is written in PHP (which is not bad), but custom (which often is). Since we needed to introduce serious slew of new tasks, we started looking for alternative, which would provide us with infrastructure and features, our system didn't. Since I used rake before a little bit, I finally got incentive to get my feet fully wet. This is what I found out.
+
 ---
-As in all companies, we need to build stuff. Recently I got involved with our client side building process and found out, that it is written in PHP (which is not bad), but custom (which often is). Since we needed to introduce serious slew of new tasks, we started looking for alternative, which would provide us with infrastructure and features, our system didn't. Since I used rake before a little bit, I finally got incentive to get my feet fully wet. This is what I found out.
 
 As you have guessed, Rake is a DSL for expressing build tasks and their dependencies. Enough talk, let's jump straight to the basics.
 

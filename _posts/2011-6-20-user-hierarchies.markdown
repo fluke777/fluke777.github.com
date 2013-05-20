@@ -1,9 +1,8 @@
 ---
 layout: post
 title: User hierarchies in GoodData
+perex: Trees are interesting structures and lots of fun and despair can arise from them. Recently I had a chance to work on an interesting problem at my day job at [GoodData](http://gooddata.com) so I wrote down some notes for others.
 ---
-
-*Trees are interesting structures and lots of fun and despair can arise from them. Recently I had a chance to work on an interesting problem at my day job at [GoodData](http://gooddata.com) so I wrote down some notes for others.*
 
 Recently a lot of our customers asked us to solve an interesting problem. They have an army of sales people that sell some goods. On top of classic reporting (questions like "How much did we sell last year?", "How are we doing this year against quotas?" etc.) they wanted to ask questions like "How much did my subordinates sell?". They would also love if they could invite every single person in their company and each would have a constrained view of the warehouse. Seeing only deals themselves and their subordinates made. During couple of last weeks we have tried a lots of ways how to do that. As it often is with computers there is nothing like a free lunch so lets have a brief look on each of those methods and lets talk about their pros and cons.
 

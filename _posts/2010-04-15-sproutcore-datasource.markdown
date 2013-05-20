@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Sproutcore and DataSource - my take (part 1)
+perex: Recently I have seen some confusion about DataStore and granularity of its usage in Sproutcore google group. Since I have been playing with this lately and usually to tidy things up in my head, it is best to put thoughts on paper, here is my take on the usage of DataSources.
 ---
 
-*Recently I have seen some confusion about DataStore and granularity of its usage in Sproutcore google group. Since I have been playing with this lately and usually to tidy things up in my head, it is best to put thoughts on paper, here is my take on the usage of DataSources.*
 
 Before we begin, let's just say, that this article is more trying to answer the why, than how. I assume, you are familiar with at least basic design of [SC.DataSource](http://docs.sproutcore.com/symbols/SC.DataSource.html#constructor) and interaction with [SC.Store](http://docs.sproutcore.com/symbols/SC.Store.html#constructor). If you are not, go, read the docs. This part is covered in great detail on [Sproutcore wiki](http://wiki.sproutcore.com/DataStore-About+DataSources). 
 
